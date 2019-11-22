@@ -1,0 +1,3 @@
+reports:
+  dir: /home/vcap/app/reports/
+  location: file:${reports.dir}

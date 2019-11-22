@@ -1,0 +1,3 @@
+reports:
+  dir: target/reports
+  location: file:${reports.dir}
