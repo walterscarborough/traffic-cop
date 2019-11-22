@@ -1,0 +1,15 @@
+<table xmlns:th="http://www.w3.org/1999/xhtml">
+    <thead>
+    <tr>
+        <th> Reports </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${reports.empty}">
+        <td colspan="2"> No Reports Available </td>
+    </tr>
+    <tr th:each="report : ${reports}">
+        <td><a th:href="@{/reports/{rep}/index.html(rep=${report})}" /><span th:text="${report}"> Report </span></td>
+    </tr>
+    </tbody>
+</table>

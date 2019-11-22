@@ -5,16 +5,15 @@ import io.gatling.app.Gatling
 import io.microsamples.gatlingrunner.load.GatlingContext
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
+import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
 import java.io.File
-import java.util.*
 import java.util.stream.Collectors
 
-@RestController
+@Controller
 class LoadController(
         private val service: AsyncService,
         private val objectMapper: ObjectMapper = JacksonConfiguration().getObjectMapperWithJsr(),
@@ -37,8 +36,9 @@ class LoadController(
     @GetMapping("/reports")
     fun reports(model: Model): String {
         val directories = File(reportsDir).listFiles { obj: File -> obj.isDirectory }
-        val reports = Arrays.asList(*directories).stream().map { obj: File -> obj.name }.collect(Collectors.toList())
+        val reports = listOf(*directories).stream().map { obj: File -> obj.name }.collect(Collectors.toList())
         model.addAttribute("reports", reports)
+
         return "index"
     }
 
