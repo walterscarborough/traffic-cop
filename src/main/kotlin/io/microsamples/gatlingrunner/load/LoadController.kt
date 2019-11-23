@@ -18,7 +18,7 @@ class LoadController(
     @PostMapping("/run-load-test")
     private fun runTest(@RequestBody payload: String): ResponseEntity<String> {
 
-        val simulationClazz = "io.microsamples.testz.simulation.RemoteChachkiesSimulation"
+        val simulationClazz = "io.microsamples.testz.simulation.PostRequestSimulation"
         GatlingContext.INSTANCE.payload = payload
         LogProvider.getLogger(this.javaClass).info(
                 "Running simulation: {} in {} with payload {}"

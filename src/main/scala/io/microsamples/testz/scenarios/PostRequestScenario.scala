@@ -6,13 +6,13 @@ import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import io.microsamples.gatlingrunner.load.GatlingContext
 
-object ChachkiePostScenario {
+object PostRequestScenario {
 
-  val chachkiesPostScenarioPath: HttpRequestBuilder = http("Post some cool chachkies")
+  val postRequestScenarioCommand: HttpRequestBuilder = http("create post request")
     .post("/remote-chachkies")
     .body(StringBody(GatlingContext.INSTANCE.payload))
     .check(status is 200)
 
-  val chachkiesRoot: ScenarioBuilder = scenario("Post Remote Chachkies")
-    .exec(chachkiesPostScenarioPath)
+  val postRequestScenario: ScenarioBuilder = scenario("execute post request")
+    .exec(postRequestScenarioCommand)
 }
