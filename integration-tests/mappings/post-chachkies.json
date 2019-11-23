@@ -1,0 +1,12 @@
+{
+  "request" : {
+    "url" : "/chachkies",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalToJson" : "{\"name\": \"my fancy chachkie\"}"
+    } ]
+  },
+  "response" : {
+    "status" : 200
+  }
+}

@@ -9,7 +9,7 @@ import io.microsamples.gatlingrunner.load.GatlingContext
 object PostRequestScenario {
 
   val postRequestScenarioCommand: HttpRequestBuilder = http("create post request")
-    .post("/remote-chachkies")
+    .post(GatlingContext.INSTANCE.endpoint)
     .body(StringBody(GatlingContext.INSTANCE.payload))
     .check(status is 200)
 

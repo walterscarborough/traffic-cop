@@ -1,5 +1,6 @@
 package io.microsamples.gatlingrunner.load
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import io.gatling.app.Gatling
 import io.microsamples.gatlingrunner.configuration.LogProvider
 import org.springframework.beans.factory.annotation.Value
@@ -10,21 +11,25 @@ import org.springframework.web.bind.annotation.RequestBody
 
 @Controller
 class LoadController(
-        private val service: AsyncService
+        private val service: AsyncService,
+        private val objectMapper: ObjectMapper
 ) {
     @Value("\${reports.dir:src/main/resources/static}")
     private lateinit var reportsDir: String
 
     @PostMapping("/run-load-test")
-    private fun runTest(@RequestBody payload: String): ResponseEntity<String> {
+    private fun runTest(@RequestBody runLoadPostRequest: RunLoadPostRequest): ResponseEntity<String> {
 
         val simulationClazz = "io.microsamples.testz.simulation.PostRequestSimulation"
-        GatlingContext.INSTANCE.payload = payload
+        GatlingContext.INSTANCE.payload = runLoadPostRequest.payload
+        GatlingContext.INSTANCE.baseUrl = runLoadPostRequest.baseUrl
+        GatlingContext.INSTANCE.endpoint = runLoadPostRequest.endpoint
+
         LogProvider.getLogger(this.javaClass).info(
-                "Running simulation: {} in {} with payload {}"
-                , simulationClazz
-                , reportsDir
-                , payload
+            "Running simulation: {} in {} with request {}"
+            , simulationClazz
+            , reportsDir
+            , objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(runLoadPostRequest)
         )
 
         return executeGatlingScenario(simulationClazz)

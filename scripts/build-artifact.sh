@@ -13,31 +13,20 @@ function go_to_project_root_directory() {
     cd "$script_dir/.."
 }
 
-function run_linters() {
-    ./scripts/run-linters.sh
-}
-
-function run_tests() {
-    ./scripts/run-tests.sh
-    ./scripts/run-integration-tests.sh
-}
-
-function push_project() {
-    git push
+function build_artifact() {
+    ./mvnw clean install package
 }
 
 function display_success_message() {
     local -r green_color_code='\033[1;32m'
     local -r default_color_code='\033[00m'
-    echo -e "${green_color_code}\\nShip-it ran successfully 🚀 ${default_color_code} \\n"
+    echo -e "${green_color_code}\\nJar built successfully 📦 ${default_color_code} \\n"
 }
 
 function main() {
     set_bash_error_handling
     go_to_project_root_directory
-    run_linters
-    run_tests
-    push_project
+    build_artifact
     display_success_message
 }
 

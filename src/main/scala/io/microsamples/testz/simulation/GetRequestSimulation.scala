@@ -9,7 +9,7 @@ import scala.concurrent.duration._
 import scala.language.postfixOps
 
 class GetRequestSimulation extends Simulation {
-  val httpConf = http.baseUrl(Environment.chachkiesBaseUrl)
+  val httpConf = http.baseUrl(Environment.postRequestUrl)
     .headers(Headers.commonHeader)
 
   val getRequestScenarios = List(
