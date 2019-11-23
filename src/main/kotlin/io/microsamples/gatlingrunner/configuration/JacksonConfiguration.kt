@@ -1,4 +1,4 @@
-package io.microsamples.gatlingrunner
+package io.microsamples.gatlingrunner.configuration
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature

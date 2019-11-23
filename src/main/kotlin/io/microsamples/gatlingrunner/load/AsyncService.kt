@@ -1,4 +1,4 @@
-package io.microsamples.gatlingrunner
+package io.microsamples.gatlingrunner.load
 
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
