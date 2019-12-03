@@ -15,13 +15,15 @@ class PostRequestSimulation extends Simulation {
 
   val postRequestScenarios = List(
     PostRequestScenario.postRequestScenario.inject(
-      constantUsersPerSec(3) during (5 seconds)
+      constantUsersPerSec(GatlingContext.INSTANCE.constantUsersPerSecond) during (GatlingContext.INSTANCE.constantUsersPerSecondDuration seconds)
     )
   )
 
+  val constantUsersPerMinuteDuration = GatlingContext.INSTANCE.constantUsersPerSecondDuration * 60
+
   setUp(postRequestScenarios)
     .protocols(httpConf)
-    .maxDuration(5 minutes)
+    .maxDuration((constantUsersPerMinuteDuration + 1) minutes)
 
     .assertions(
       global.responseTime.max.lt(Environment.maxResponseTime.toInt)

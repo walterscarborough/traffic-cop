@@ -26,7 +26,7 @@ function download_wiremock_if_not_available() {
 }
 
 function start_wiremock_and_record_process_id() {
-    killall wiremock
+    killall wiremock || true
     java -jar integration-tests/wiremock.jar --root-dir integration-tests --port ${WIREMOCK_PORT} &
     WIREMOCK_PID=$!
 }
@@ -41,7 +41,7 @@ function reset_wiremock_request_counter() {
 }
 
 function test_post_command() {
-    curl -X POST http://localhost:8080/run-load-test -d '{"payload": "{\"name\": \"my fancy chachkie\"}", "baseUrl": "http://localhost:9090", "endpoint": "/chachkies"}' -H "Content-Type: application/json"
+    curl -X POST http://localhost:8080/run-load-test -d '{"constantUsersPerSecond": 5, "constantUsersPerSecondDuration": 5, "payload": "{\"name\": \"my fancy chachkie\"}", "baseUrl": "http://localhost:9090", "endpoint": "/chachkies"}' -H "Content-Type: application/json"
 
     sleep 30
 
