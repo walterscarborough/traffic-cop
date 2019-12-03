@@ -17,19 +17,16 @@ function go_to_project_root_directory() {
 }
 
 function download_wiremock_if_not_available() {
-    echo "A"
-    pwd
-    ls
     if [[ -f "integration-tests/wiremock.jar" ]]; then
         echo "Using cached wiremock jar"
     else
-      echo "B"
         local -r wiremock_version="2.25.1"
         curl -o "integration-tests/wiremock.jar" "http://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-standalone/${wiremock_version}/wiremock-standalone-${wiremock_version}.jar"
     fi
 }
 
 function start_wiremock_and_record_process_id() {
+    killall wiremock
     java -jar integration-tests/wiremock.jar --root-dir integration-tests --port ${WIREMOCK_PORT} &
     WIREMOCK_PID=$!
 }
