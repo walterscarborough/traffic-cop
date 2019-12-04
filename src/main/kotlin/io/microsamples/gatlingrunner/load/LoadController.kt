@@ -24,8 +24,13 @@ class LoadController(
         GatlingContext.INSTANCE.payload = runLoadPostRequest.payload
         GatlingContext.INSTANCE.baseUrl = runLoadPostRequest.baseUrl
         GatlingContext.INSTANCE.endpoint = runLoadPostRequest.endpoint
+
         GatlingContext.INSTANCE.constantUsersPerSecond = runLoadPostRequest.constantUsersPerSecond
         GatlingContext.INSTANCE.constantUsersPerSecondDuration = runLoadPostRequest.constantUsersPerSecondDuration
+
+        GatlingContext.INSTANCE.rampUsersPerSecondMinimum = runLoadPostRequest.rampUsersPerSecondMinimum
+        GatlingContext.INSTANCE.rampUsersPerSecondMaximum = runLoadPostRequest.rampUsersPerSecondMaximum
+        GatlingContext.INSTANCE.rampUsersPerSecondDuration = runLoadPostRequest.rampUsersPerSecondDuration
 
         LogProvider.getLogger(this.javaClass).info(
             "Running simulation: {} in {} with request {}"

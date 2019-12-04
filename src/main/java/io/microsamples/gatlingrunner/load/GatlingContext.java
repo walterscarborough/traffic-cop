@@ -9,4 +9,8 @@ public enum GatlingContext {
 
     public int constantUsersPerSecond;
     public int constantUsersPerSecondDuration;
+
+    public int rampUsersPerSecondMinimum;
+    public int rampUsersPerSecondMaximum;
+    public int rampUsersPerSecondDuration;
 }

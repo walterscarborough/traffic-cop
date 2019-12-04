@@ -41,7 +41,7 @@ function reset_wiremock_request_counter() {
 }
 
 function test_post_command() {
-    curl -X POST http://localhost:8080/run-load-test -d '{"constantUsersPerSecond": 5, "constantUsersPerSecondDuration": 5, "payload": "{\"name\": \"my fancy chachkie\"}", "baseUrl": "http://localhost:9090", "endpoint": "/chachkies"}' -H "Content-Type: application/json"
+    curl -X POST http://localhost:8080/run-load-test -d '{"rampUsersPerSecondMinimum": 0, "rampUsersPerSecondMaximum": 0, "rampUsersPerSecondDuration": 0, "constantUsersPerSecond": 5, "constantUsersPerSecondDuration": 5, "payload": "{\"name\": \"my fancy chachkie\"}", "baseUrl": "http://localhost:9090", "endpoint": "/chachkies"}' -H "Content-Type: application/json"
 
     sleep 30
 
@@ -49,7 +49,7 @@ function test_post_command() {
 
     local -r post_command_output_success="$(curl http://localhost:${WIREMOCK_PORT}/__admin/requests | grep -c1 '"absoluteUrl" : "http://localhost:9090/chachkies"')"
 
-    if [[ "${post_command_output_success}" != "15" ]]; then
+    if [[ "${post_command_output_success}" != "25" ]]; then
         echo "Test failed"
         shutdown_wiremock
 
