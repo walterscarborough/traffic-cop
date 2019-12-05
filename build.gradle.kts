@@ -1,8 +1,8 @@
 plugins {
-	id("org.springframework.boot") version "2.2.1.RELEASE"
-	id("io.spring.dependency-management") version "1.0.8.RELEASE"
-	kotlin("jvm") version "1.3.50" apply(false)
-	kotlin("plugin.spring") version "1.3.50" apply(false)
+	id("org.springframework.boot") version VersionsConfig.springBootVersion
+	id("io.spring.dependency-management") version VersionsConfig.springDependencyManagementVersion
+	kotlin("jvm") version VersionsConfig.kotlinVersion apply(false)
+	kotlin("plugin.spring") version VersionsConfig.kotlinVersion apply(false)
 }
 
 group = "com.example"

@@ -13,8 +13,8 @@ repositories {
 dependencies {
 	implementation(project(":components:gatling-context"))
 
-	implementation("io.gatling.highcharts:gatling-charts-highcharts:3.2.1")
-	implementation("io.gatling:gatling-core:3.2.1")
-	implementation("io.gatling:gatling-http:3.2.1")
+	implementation("io.gatling.highcharts:gatling-charts-highcharts:${VersionsConfig.gatlingVersion}")
+	implementation("io.gatling:gatling-core:${VersionsConfig.gatlingVersion}")
+	implementation("io.gatling:gatling-http:${VersionsConfig.gatlingVersion}")
 	implementation("org.scala-lang:scala-library")
 }

@@ -27,7 +27,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    testImplementation("com.github.tomakehurst:wiremock-jre8:2.25.1")
+    testImplementation("com.github.tomakehurst:wiremock-jre8:${VersionsConfig.wireMockVersion}")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
