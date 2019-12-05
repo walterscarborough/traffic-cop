@@ -6,8 +6,8 @@ import org.springframework.scheduling.annotation.EnableAsync
 
 @SpringBootApplication
 @EnableAsync
-class GatlingRunnerApplication
+class LoadRunner
 
 fun main(args: Array<String>) {
-	runApplication<GatlingRunnerApplication>(*args)
+	runApplication<LoadRunner>(*args)
 }

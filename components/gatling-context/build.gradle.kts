@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("java")
 	id("io.spring.dependency-management")
 	kotlin("jvm")
+	kotlin("plugin.spring")
 }
 
 group = "com.example"

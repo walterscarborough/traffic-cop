@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="gatling-runner-kotlin.components.gatling-context-component.main" target="1.8" />
       <module name="gatling-runner-kotlin.components.gatling-context-component.test" target="1.8" />
+      <module name="gatling-runner-kotlin.main" target="1.8" />
+      <module name="gatling-runner-kotlin.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
