@@ -1,8 +1,8 @@
 package io.microsamples.gatlingrunner.load
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.gatling.app.Gatling
 import io.microsamples.gatlingrunner.configuration.LogProvider
+import io.microsamples.testz.GatlingWrapper
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
@@ -54,7 +54,7 @@ class LoadController(
         service.doWork(
                 Runnable {
                     try {
-                        Gatling.main(args)
+                        GatlingWrapper.startGatling(args)
                     } catch (se: SecurityException) {
                     }
                 }
