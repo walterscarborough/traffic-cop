@@ -7,11 +7,11 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class PostRequestTests: AbstractRequestTests() {
+class DeleteRequestTests: AbstractRequestTests() {
 
     override fun setupWireMockStubs() {
         wireMockServer.stubFor(
-            WireMock.post(WireMock.urlEqualTo("/chachkies"))
+            WireMock.delete(WireMock.urlEqualTo("/chachkies"))
                 .willReturn(
                     ok()
                 )
@@ -21,7 +21,7 @@ class PostRequestTests: AbstractRequestTests() {
     override fun verifyWireMockRequests(expectedTotalMessages: Int) {
         wireMockServer.verify(
             expectedTotalMessages,
-            WireMock.postRequestedFor(WireMock.urlEqualTo("/chachkies"))
+            WireMock.deleteRequestedFor(WireMock.urlEqualTo("/chachkies"))
         )
     }
 
@@ -40,10 +40,9 @@ class PostRequestTests: AbstractRequestTests() {
               "rampUsersPerSecondDuration": ${rampUsersPerSecondDuration}, 
               "constantUsersPerSecond": ${constantUsersPerSecond}, 
               "constantUsersPerSecondDuration": ${constantUsersPerSecondDuration}, 
-              "payload": "{\"name\": \"my fancy chachkie\"}", 
               "baseUrl": "http://localhost:9090", 
               "endpoint": "/chachkies",
-              "httpMethod": "POST"
+              "httpMethod": "DELETE"
             }
         """.trimIndent()
     }

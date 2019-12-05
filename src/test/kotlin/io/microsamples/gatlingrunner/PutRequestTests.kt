@@ -7,11 +7,11 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class PostRequestTests: AbstractRequestTests() {
+class PutRequestTests: AbstractRequestTests() {
 
     override fun setupWireMockStubs() {
         wireMockServer.stubFor(
-            WireMock.post(WireMock.urlEqualTo("/chachkies"))
+            WireMock.put(WireMock.urlEqualTo("/chachkies"))
                 .willReturn(
                     ok()
                 )
@@ -21,7 +21,7 @@ class PostRequestTests: AbstractRequestTests() {
     override fun verifyWireMockRequests(expectedTotalMessages: Int) {
         wireMockServer.verify(
             expectedTotalMessages,
-            WireMock.postRequestedFor(WireMock.urlEqualTo("/chachkies"))
+            WireMock.putRequestedFor(WireMock.urlEqualTo("/chachkies"))
         )
     }
 
@@ -43,7 +43,7 @@ class PostRequestTests: AbstractRequestTests() {
               "payload": "{\"name\": \"my fancy chachkie\"}", 
               "baseUrl": "http://localhost:9090", 
               "endpoint": "/chachkies",
-              "httpMethod": "POST"
+              "httpMethod": "PUT"
             }
         """.trimIndent()
     }
