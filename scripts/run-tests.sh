@@ -14,7 +14,7 @@ function go_to_project_root_directory() {
 }
 
 function run_tests() {
-    ./mvnw clean test
+    ./gradlew clean test
 }
 
 function display_success_message() {

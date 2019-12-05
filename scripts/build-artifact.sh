@@ -14,7 +14,7 @@ function go_to_project_root_directory() {
 }
 
 function build_artifact() {
-    ./mvnw clean install package
+    ./gradlew clean build
 }
 
 function display_success_message() {
