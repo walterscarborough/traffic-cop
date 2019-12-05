@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
+import org.springframework.restdocs.payload.JsonFieldType
+import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
+import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -118,7 +121,22 @@ abstract class AbstractRequestTests {
                 .header("Content-Type", MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isOk)
-            .andDo(document("run-load-test"))
+            .andDo(
+                document(
+                    "run-load-test",
+                    requestFields(
+                        fieldWithPath("rampUsersPerSecondMinimum").type(JsonFieldType.NUMBER).optional().description("Minimum number of users to simulate per second"),
+                        fieldWithPath("rampUsersPerSecondMaximum").type(JsonFieldType.NUMBER).optional().description("Maximum number of users to simulate per second"),
+                        fieldWithPath("rampUsersPerSecondDuration").type(JsonFieldType.NUMBER).optional().description("Number of seconds to ramp up users during a simulation"),
+                        fieldWithPath("constantUsersPerSecond").type(JsonFieldType.NUMBER).optional().description("Constant number of users to simulate per second"),
+                        fieldWithPath("constantUsersPerSecondDuration").type(JsonFieldType.NUMBER).optional().description("Number of seconds to simulate constant users"),
+                        fieldWithPath("payload").type(JsonFieldType.STRING).optional().description("Payload to send with a POST or PUT request"),
+                        fieldWithPath("baseUrl").type(JsonFieldType.STRING).description("Base url of the resource to run load test against"),
+                        fieldWithPath("endpoint").type(JsonFieldType.STRING).description("Endpoint associated with base url of the resource to run load test against"),
+                        fieldWithPath("httpMethod").type(JsonFieldType.STRING).description("HTTP method to use when sending load test requests")
+                    )
+                )
+            )
 
         Thread.sleep(20000)
 

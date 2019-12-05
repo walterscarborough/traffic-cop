@@ -1,1 +1,1 @@
-include::{snippets}/run-load-test/curl-request.adoc[]
+operation::run-load-test[]
