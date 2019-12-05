@@ -169,7 +169,8 @@ class PostRequestTests {
               "constantUsersPerSecondDuration": ${constantUsersPerSecondDuration}, 
               "payload": "{\"name\": \"my fancy chachkie\"}", 
               "baseUrl": "http://localhost:9090", 
-              "endpoint": "/chachkies"
+              "endpoint": "/chachkies",
+              "httpMethod": "POST"
             }
         """.trimIndent()
     }

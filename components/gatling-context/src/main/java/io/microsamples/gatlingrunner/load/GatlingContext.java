@@ -6,6 +6,7 @@ public enum GatlingContext {
     public String payload;
     public String baseUrl;
     public String endpoint;
+    public HttpMethod httpMethod;
 
     public int constantUsersPerSecond;
     public int constantUsersPerSecondDuration;

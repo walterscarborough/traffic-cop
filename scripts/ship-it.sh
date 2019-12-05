@@ -19,7 +19,6 @@ function run_linters() {
 
 function run_tests() {
     ./scripts/run-tests.sh
-    ./scripts/run-post-request-integration-test.sh
 }
 
 function push_project() {

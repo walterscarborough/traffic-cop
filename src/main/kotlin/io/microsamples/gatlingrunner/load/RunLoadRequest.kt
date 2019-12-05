@@ -1,9 +1,10 @@
 package io.microsamples.gatlingrunner.load
 
-data class RunLoadPostRequest(
+data class RunLoadRequest(
     val baseUrl: String,
     val endpoint: String,
     val payload: String,
+    val httpMethod: HttpMethod,
 
     val constantUsersPerSecond: Int,
     val constantUsersPerSecondDuration: Int,

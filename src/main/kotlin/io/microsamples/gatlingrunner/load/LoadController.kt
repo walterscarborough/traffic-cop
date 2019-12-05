@@ -17,33 +17,23 @@ class LoadController(
     @Value("\${reports.dir:src/main/resources/static}")
     private lateinit var reportsDir: String
 
+    @Suppress("unused")
     @PostMapping("/run-load-test")
-    private fun runTest(@RequestBody runLoadPostRequest: RunLoadPostRequest): ResponseEntity<String> {
-
-        val simulationClazz = "io.microsamples.testz.simulation.PostRequestSimulation"
-        GatlingContext.INSTANCE.payload = runLoadPostRequest.payload
-        GatlingContext.INSTANCE.baseUrl = runLoadPostRequest.baseUrl
-        GatlingContext.INSTANCE.endpoint = runLoadPostRequest.endpoint
-
-        GatlingContext.INSTANCE.constantUsersPerSecond = runLoadPostRequest.constantUsersPerSecond
-        GatlingContext.INSTANCE.constantUsersPerSecondDuration = runLoadPostRequest.constantUsersPerSecondDuration
-
-        GatlingContext.INSTANCE.rampUsersPerSecondMinimum = runLoadPostRequest.rampUsersPerSecondMinimum
-        GatlingContext.INSTANCE.rampUsersPerSecondMaximum = runLoadPostRequest.rampUsersPerSecondMaximum
-        GatlingContext.INSTANCE.rampUsersPerSecondDuration = runLoadPostRequest.rampUsersPerSecondDuration
+    private fun runLoadTest(@RequestBody runLoadRequest: RunLoadRequest): ResponseEntity<String> {
+        cacheRunLoadRequest(runLoadRequest)
 
         LogProvider.getLogger(this.javaClass).info(
-            "Running simulation: {} in {} with request {}"
-            , simulationClazz
+            "Running simulation in {} with request {}"
             , reportsDir
-            , objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(runLoadPostRequest)
+            , objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(runLoadRequest)
         )
 
-        return executeGatlingScenario(simulationClazz)
+        return executeGatlingScenario()
     }
 
-    private fun executeGatlingScenario(simulation: String): ResponseEntity<String> {
-        val args = arrayOf("-s", simulation, "-rf", reportsDir)
+    private fun executeGatlingScenario(): ResponseEntity<String> {
+        val simulationClass = "io.microsamples.testz.simulation.GeneralSimulation"
+        val args = arrayOf("-s", simulationClass, "-rf", reportsDir)
         runTestNoExit(args)
         return ResponseEntity.ok("Report Scheduled...  Check /reports in few minutes")
     }
@@ -55,7 +45,7 @@ class LoadController(
                 Runnable {
                     try {
                         GatlingWrapper.startGatling(args)
-                    } catch (se: SecurityException) {
+                    } catch (securityException: SecurityException) {
                     }
                 }
         )
