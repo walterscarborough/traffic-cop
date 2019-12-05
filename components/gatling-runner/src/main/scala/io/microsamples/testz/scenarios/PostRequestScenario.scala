@@ -8,8 +8,8 @@ import io.microsamples.gatlingrunner.load.GatlingContext
 
 object PostRequestScenario {
   val postRequestScenarioCommand: HttpRequestBuilder = http("create post request")
-    .post(GatlingContext.INSTANCE.endpoint)
-    .body(StringBody(GatlingContext.INSTANCE.payload))
+    .post(GatlingContext.INSTANCE.getEndpoint())
+    .body(StringBody(GatlingContext.INSTANCE.getPayload))
     .check(status is 200)
 
   val postRequestScenario: ScenarioBuilder = scenario("execute post request")

@@ -11,13 +11,13 @@ import scala.language.postfixOps
 
 object ScenarioFactory {
   def createScenarios(): List[PopulationBuilder] = {
-    return GatlingContext.INSTANCE.httpMethod match {
+    return GatlingContext.INSTANCE.getHttpMethod match {
 
       case HttpMethod.GET => {
         return List(
           GetRequestScenario.getRequestScenario.inject(
-            constantUsersPerSec(GatlingContext.INSTANCE.constantUsersPerSecond) during (GatlingContext.INSTANCE.constantUsersPerSecondDuration seconds),
-            rampUsersPerSec(GatlingContext.INSTANCE.rampUsersPerSecondMinimum) to GatlingContext.INSTANCE.rampUsersPerSecondMaximum during (GatlingContext.INSTANCE.rampUsersPerSecondDuration seconds)
+            constantUsersPerSec(GatlingContext.INSTANCE.getConstantUsersPerSecond) during (GatlingContext.INSTANCE.getConstantUsersPerSecondDuration seconds),
+            rampUsersPerSec(GatlingContext.INSTANCE.getRampUsersPerSecondMinimum) to GatlingContext.INSTANCE.getRampUsersPerSecondMaximum during (GatlingContext.INSTANCE.getRampUsersPerSecondDuration seconds)
           )
         )
       }
@@ -25,8 +25,8 @@ object ScenarioFactory {
       case HttpMethod.PUT => {
         return List(
           PutRequestScenario.putRequestScenario.inject(
-            constantUsersPerSec(GatlingContext.INSTANCE.constantUsersPerSecond) during (GatlingContext.INSTANCE.constantUsersPerSecondDuration seconds),
-            rampUsersPerSec(GatlingContext.INSTANCE.rampUsersPerSecondMinimum) to GatlingContext.INSTANCE.rampUsersPerSecondMaximum during (GatlingContext.INSTANCE.rampUsersPerSecondDuration seconds)
+            constantUsersPerSec(GatlingContext.INSTANCE.getConstantUsersPerSecond) during (GatlingContext.INSTANCE.getConstantUsersPerSecondDuration seconds),
+            rampUsersPerSec(GatlingContext.INSTANCE.getRampUsersPerSecondMinimum) to GatlingContext.INSTANCE.getRampUsersPerSecondMaximum during (GatlingContext.INSTANCE.getRampUsersPerSecondDuration seconds)
           )
         )
       }
@@ -35,8 +35,8 @@ object ScenarioFactory {
       case HttpMethod.POST => {
         return List(
           PostRequestScenario.postRequestScenario.inject(
-            constantUsersPerSec(GatlingContext.INSTANCE.constantUsersPerSecond) during (GatlingContext.INSTANCE.constantUsersPerSecondDuration seconds),
-            rampUsersPerSec(GatlingContext.INSTANCE.rampUsersPerSecondMinimum) to GatlingContext.INSTANCE.rampUsersPerSecondMaximum during (GatlingContext.INSTANCE.rampUsersPerSecondDuration seconds)
+            constantUsersPerSec(GatlingContext.INSTANCE.getConstantUsersPerSecond) during (GatlingContext.INSTANCE.getConstantUsersPerSecondDuration seconds),
+            rampUsersPerSec(GatlingContext.INSTANCE.getRampUsersPerSecondMinimum) to GatlingContext.INSTANCE.getRampUsersPerSecondMaximum during (GatlingContext.INSTANCE.getRampUsersPerSecondDuration seconds)
           )
         )
       }
@@ -44,8 +44,8 @@ object ScenarioFactory {
       case HttpMethod.DELETE => {
         return List(
           DeleteRequestScenario.deleteRequestScenario.inject(
-            constantUsersPerSec(GatlingContext.INSTANCE.constantUsersPerSecond) during (GatlingContext.INSTANCE.constantUsersPerSecondDuration seconds),
-            rampUsersPerSec(GatlingContext.INSTANCE.rampUsersPerSecondMinimum) to GatlingContext.INSTANCE.rampUsersPerSecondMaximum during (GatlingContext.INSTANCE.rampUsersPerSecondDuration seconds)
+            constantUsersPerSec(GatlingContext.INSTANCE.getConstantUsersPerSecond) during (GatlingContext.INSTANCE.getConstantUsersPerSecondDuration seconds),
+            rampUsersPerSec(GatlingContext.INSTANCE.getRampUsersPerSecondMinimum) to GatlingContext.INSTANCE.getRampUsersPerSecondMaximum during (GatlingContext.INSTANCE.getRampUsersPerSecondDuration seconds)
           )
         )
       }

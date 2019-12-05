@@ -8,7 +8,7 @@ import io.microsamples.gatlingrunner.load.GatlingContext
 
 object GetRequestScenario {
   val getRequestScenarioCommand: HttpRequestBuilder = http("create get request")
-    .get(GatlingContext.INSTANCE.endpoint)
+    .get(GatlingContext.INSTANCE.getEndpoint())
     .check(status is 200)
 
   val getRequestScenario: ScenarioBuilder = scenario("execute get request")

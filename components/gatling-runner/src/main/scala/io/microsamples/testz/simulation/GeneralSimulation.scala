@@ -11,7 +11,7 @@ import scala.concurrent.duration._
 import scala.language.postfixOps
 
 class GeneralSimulation extends Simulation {
-  val httpConf: HttpProtocolBuilder = http.baseUrl(GatlingContext.INSTANCE.baseUrl)
+  val httpConf: HttpProtocolBuilder = http.baseUrl(GatlingContext.INSTANCE.getBaseUrl)
     .headers(
       Map(
         "Accept" -> "application/json, text/javascript, */*; q=0.01",
@@ -22,7 +22,7 @@ class GeneralSimulation extends Simulation {
 
   val scenarios: List[PopulationBuilder] = ScenarioFactory.createScenarios()
 
-  val constantUsersPerMinuteDuration: Int = GatlingContext.INSTANCE.constantUsersPerSecondDuration * 60
+  val constantUsersPerMinuteDuration: Int = GatlingContext.INSTANCE.getConstantUsersPerSecondDuration * 60
 
   val maxResponseTimeMilliseconds = 10000
 

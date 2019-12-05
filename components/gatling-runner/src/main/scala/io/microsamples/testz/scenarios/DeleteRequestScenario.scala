@@ -8,7 +8,7 @@ import io.microsamples.gatlingrunner.load.GatlingContext
 
 object DeleteRequestScenario {
   val deleteRequestScenarioCommand: HttpRequestBuilder = http("create delete request")
-    .delete(GatlingContext.INSTANCE.endpoint)
+    .delete(GatlingContext.INSTANCE.getEndpoint())
     .check(status is 200)
 
   val deleteRequestScenario: ScenarioBuilder = scenario("execute delete request")
