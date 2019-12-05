@@ -1,3 +1,4 @@
+import org.asciidoctor.gradle.AsciidoctorTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -5,6 +6,7 @@ plugins {
     id("io.spring.dependency-management")
     kotlin("jvm")
     kotlin("plugin.spring")
+    id("org.asciidoctor.convert") version VersionsConfig.asciidoctorVersion
 }
 
 group = "com.example"
@@ -18,6 +20,9 @@ repositories {
 dependencies {
     implementation(project(":components:gatling-context"))
     implementation(project(":components:gatling-runner"))
+
+    asciidoctor("org.springframework.restdocs:spring-restdocs-asciidoctor:${VersionsConfig.springRestDocsVersion}")
+    testCompile("org.springframework.restdocs:spring-restdocs-mockmvc:${VersionsConfig.springRestDocsVersion}")
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
@@ -33,6 +38,17 @@ dependencies {
     }
 }
 
+tasks.withType<AsciidoctorTask> {
+    dependsOn(tasks.withType<Test>())
+
+    doLast {
+        copy {
+            from("$buildDir/asciidoc/html5")
+            into("$buildDir/resources/main/static")
+        }
+    }
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
 }
@@ -42,4 +58,8 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "1.8"
     }
+}
+
+tasks.withType<Jar> {
+    dependsOn(tasks.withType<AsciidoctorTask>())
 }

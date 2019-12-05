@@ -6,11 +6,14 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs
 import org.springframework.http.MediaType
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
+@AutoConfigureRestDocs
 abstract class AbstractRequestTests {
 
     @Autowired
@@ -113,7 +116,9 @@ abstract class AbstractRequestTests {
                     )
                 )
                 .header("Content-Type", MediaType.APPLICATION_JSON)
-        ).andExpect(status().isOk)
+        )
+            .andExpect(status().isOk)
+            .andDo(document("run-load-test"))
 
         Thread.sleep(20000)
 
