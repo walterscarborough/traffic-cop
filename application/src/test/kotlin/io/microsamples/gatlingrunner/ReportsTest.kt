@@ -3,6 +3,8 @@ package io.microsamples.gatlingrunner
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
+import io.microsamples.gatlingrunner.factories.RunLoadRequestFactory
+import io.microsamples.gatlingrunner.load.HttpMethod
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -11,13 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
 class ReportsTest {
@@ -29,7 +32,7 @@ class ReportsTest {
 
     @BeforeEach
     internal fun setUp() {
-        wireMockServer = WireMockServer(options().port(9090))
+        wireMockServer = WireMockServer(options().dynamicPort())
         wireMockServer.start()
 
         setupWireMockStubs()
@@ -62,9 +65,11 @@ class ReportsTest {
         mockMvc.perform(
             MockMvcRequestBuilders.post("/run-load-test")
                 .content(
-                    buildRequestJsonFoo(
+                    RunLoadRequestFactory.createJson(
                         constantUsersPerSecond = 1,
-                        constantUsersPerSecondDuration = 3
+                        constantUsersPerSecondDuration = 3,
+                        wireMockServerPort = wireMockServer.port(),
+                        httpMethod = HttpMethod.GET
                     )
                 )
                 .header("Content-Type", MediaType.APPLICATION_JSON)
@@ -80,25 +85,6 @@ class ReportsTest {
         val newReportLinkCount = newReportsResult.response.contentAsString.split("<a href=").size - 1
 
         assertThat(newReportLinkCount).isGreaterThan(initialReportLinkCount)
-    }
-
-    private fun buildRequestJsonFoo(
-        constantUsersPerSecond: Int,
-        constantUsersPerSecondDuration: Int
-    ): String {
-        // language=json
-        return """
-            {
-              "rampUsersPerSecondMinimum": 0, 
-              "rampUsersPerSecondMaximum": 0, 
-              "rampUsersPerSecondDuration": 0, 
-              "constantUsersPerSecond": ${constantUsersPerSecond}, 
-              "constantUsersPerSecondDuration": ${constantUsersPerSecondDuration}, 
-              "baseUrl": "http://localhost:9090", 
-              "endpoint": "/chachkies",
-              "httpMethod": "GET"
-            }
-        """.trimIndent()
     }
 
 }

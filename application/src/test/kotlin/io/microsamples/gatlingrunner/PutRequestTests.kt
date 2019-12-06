@@ -2,11 +2,9 @@ package io.microsamples.gatlingrunner
 
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock.ok
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
+import io.microsamples.gatlingrunner.factories.RunLoadRequestFactory
+import io.microsamples.gatlingrunner.load.HttpMethod
 
-@SpringBootTest
-@AutoConfigureMockMvc
 class PutRequestTests: AbstractRequestTests() {
 
     override fun setupWireMockStubs() {
@@ -25,26 +23,21 @@ class PutRequestTests: AbstractRequestTests() {
         )
     }
 
-    override fun buildRequestJsonFoo(
+    override fun getRequestJson(
         constantUsersPerSecond: Int,
         constantUsersPerSecondDuration: Int,
         rampUsersPerSecondMinimum: Int,
         rampUsersPerSecondMaximum: Int,
         rampUsersPerSecondDuration: Int
     ): String {
-        // language=json
-        return """
-            {
-              "rampUsersPerSecondMinimum": ${rampUsersPerSecondMinimum}, 
-              "rampUsersPerSecondMaximum": ${rampUsersPerSecondMaximum}, 
-              "rampUsersPerSecondDuration": ${rampUsersPerSecondDuration}, 
-              "constantUsersPerSecond": ${constantUsersPerSecond}, 
-              "constantUsersPerSecondDuration": ${constantUsersPerSecondDuration}, 
-              "payload": "{\"name\": \"my fancy chachkie\"}", 
-              "baseUrl": "http://localhost:9090", 
-              "endpoint": "/chachkies",
-              "httpMethod": "PUT"
-            }
-        """.trimIndent()
+        return RunLoadRequestFactory.createJson(
+            constantUsersPerSecond = constantUsersPerSecond,
+            constantUsersPerSecondDuration = constantUsersPerSecondDuration,
+            rampUsersPerSecondMinimum = rampUsersPerSecondMinimum,
+            rampUsersPerSecondMaximum = rampUsersPerSecondMaximum,
+            rampUsersPerSecondDuration = rampUsersPerSecondDuration,
+            wireMockServerPort = wireMockServer.port(),
+            httpMethod = HttpMethod.PUT
+        )
     }
 }

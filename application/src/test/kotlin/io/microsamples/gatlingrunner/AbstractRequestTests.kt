@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.payload.JsonFieldType
@@ -16,6 +18,8 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
 @AutoConfigureRestDocs
 abstract class AbstractRequestTests {
 
@@ -26,7 +30,7 @@ abstract class AbstractRequestTests {
 
     protected abstract fun setupWireMockStubs()
 
-    protected abstract fun buildRequestJsonFoo(
+    protected abstract fun getRequestJson(
         constantUsersPerSecond: Int = 0,
         constantUsersPerSecondDuration: Int = 0,
         rampUsersPerSecondMinimum: Int = 0,
@@ -38,7 +42,7 @@ abstract class AbstractRequestTests {
 
     @BeforeEach
     internal fun setUp() {
-        wireMockServer = WireMockServer(options().port(9090))
+        wireMockServer = WireMockServer(options().dynamicPort())
         wireMockServer.start()
 
         setupWireMockStubs()
@@ -57,7 +61,7 @@ abstract class AbstractRequestTests {
         mockMvc.perform(
             MockMvcRequestBuilders.post("/run-load-test")
                 .content(
-                    buildRequestJsonFoo(
+                    getRequestJson(
                         constantUsersPerSecond = constantUsersPerSecond,
                         constantUsersPerSecondDuration = constantUsersPerSecondDuration
                     )
@@ -80,7 +84,7 @@ abstract class AbstractRequestTests {
         mockMvc.perform(
             MockMvcRequestBuilders.post("/run-load-test")
                 .content(
-                    buildRequestJsonFoo(
+                    getRequestJson(
                         rampUsersPerSecondMinimum = rampUsersPerSecondMinimum,
                         rampUsersPerSecondMaximum = rampUsersPerSecondMaximum,
                         rampUsersPerSecondDuration = rampUsersPerSecondDuration
@@ -110,7 +114,7 @@ abstract class AbstractRequestTests {
         mockMvc.perform(
             MockMvcRequestBuilders.post("/run-load-test")
                 .content(
-                    buildRequestJsonFoo(
+                    getRequestJson(
                         constantUsersPerSecond = constantUsersPerSecond,
                         constantUsersPerSecondDuration = constantUsersPerSecondDuration,
                         rampUsersPerSecondMinimum = rampUsersPerSecondMinimum,
