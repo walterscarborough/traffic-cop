@@ -15,7 +15,8 @@ class ReportsController {
     @GetMapping("/reports")
     fun reports(model: Model): String {
         val directories = File(reportsDir)
-            .listFiles { obj: File -> obj.isDirectory }!!
+            .listFiles { obj: File -> obj.isDirectory }
+            .orEmpty()
             .asList()
 
         val reports = directories.map { obj: File -> obj.name }
