@@ -2,10 +2,18 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="gatling-runner-kotlin.application.main" target="1.8" />
+      <module name="gatling-runner-kotlin.application.test" target="1.8" />
       <module name="gatling-runner-kotlin.applications.load-runner.main" target="1.8" />
       <module name="gatling-runner-kotlin.applications.load-runner.test" target="1.8" />
+      <module name="gatling-runner-kotlin.buildSrc.main" target="11" />
+      <module name="gatling-runner-kotlin.buildSrc.test" target="11" />
       <module name="gatling-runner-kotlin.components.gatling-context-component.main" target="1.8" />
       <module name="gatling-runner-kotlin.components.gatling-context-component.test" target="1.8" />
+      <module name="gatling-runner-kotlin.components.gatling-context.main" target="1.8" />
+      <module name="gatling-runner-kotlin.components.gatling-context.test" target="1.8" />
+      <module name="gatling-runner-kotlin.components.gatling-runner.main" target="1.8" />
+      <module name="gatling-runner-kotlin.components.gatling-runner.test" target="1.8" />
       <module name="gatling-runner-kotlin.main" target="1.8" />
       <module name="gatling-runner-kotlin.test" target="1.8" />
     </bytecodeTargetLevel>

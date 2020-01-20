@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ScalaCompilerConfiguration">
-    <profile name="Gradle 1" modules="gatling-runner-kotlin.components.gatling-runner.main,gatling-runner-kotlin.components.gatling-runner.test,gatling-runner-kotlin.main,gatling-runner-kotlin.test">
+    <profile name="Gradle 1" modules="gatling-runner-kotlin.components.gatling-runner.main,gatling-runner-kotlin.components.gatling-runner.test,gatling-runner-kotlin.main,gatling-runner-kotlin.test,traffic-cop.components.gatling-runner.main,traffic-cop.components.gatling-runner.test">
       <option name="deprecationWarnings" value="true" />
       <option name="uncheckedWarnings" value="true" />
       <parameters>
