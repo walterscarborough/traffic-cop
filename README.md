@@ -22,6 +22,23 @@ Load test traffic can be set to run at a constant number of users per second, a 
 * JDK 8 or above
 * `shellcheck` for running bash linter (`brew install shellcheck`)
 
+## Starting Traffic-Cop
+Although traffic-cop can be built into a jar, it will need to be unpacked in order to run.
+Some cloud providers such as Cloud Foundry will automatically unzip the jar, but you may need unzip it yourself if your target environment doesn't do that or if you want to run it locally.
+Here's what that would look like:
+
+```bash
+./gradlew clean build
+
+cd application/build/libs
+
+# unpack the jar
+jar xf application-0.0.1-SNAPSHOT.jar
+
+# start traffic-cop
+java -cp . org.springframework.boot.loader.JarLauncher
+```
+
 ### Example Command: Run Load Test
 
 ```bash
@@ -50,6 +67,12 @@ Documentation on gatling report details is available from the gatling project: h
 
 ```
 ./scripts/run-tests.sh
+```
+
+### Run End to End Tests
+
+```
+./scripts/run-end-to-end-tests.sh
 ```
 
 ### Build
