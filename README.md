@@ -39,6 +39,20 @@ jar xf application-0.0.1-SNAPSHOT.jar
 java -cp . org.springframework.boot.loader.JarLauncher
 ```
 
+## Running With Docker
+
+There is a multistage `Dockerfile` included in this repository that will build traffic-cop and then package it into a small image.
+
+```bash
+# build
+docker build -t traffic-cop .
+
+# run from docker with the traffic-cop api port mapped to localhost:8080, and the report directory mapped to localhost /tmp/traffic-cop-reports
+docker run -it -p 8080:8080 -v /tmp/traffic-cop-reports:/traffic-cop/reports traffic-cop
+```
+
+At this point, you can send commands as usual (e.g. to `localhost:8080`, and then go see the output report in `/tmp/traffic-cop-reports/<report-name>`
+
 ### Example Command: Run Load Test
 
 ```bash
