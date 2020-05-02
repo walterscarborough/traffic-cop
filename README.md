@@ -1,5 +1,7 @@
 # Traffic Cop 🚓🚦
 
+![](https://github.com/walterscarborough/traffic-cop/workflows/.github/workflows/continuous-integration.yml/badge.svg)
+
 ## Overview
 
 This application provides a RESTful interface to the [gatling](https://gatling.io/open-source) load testing library to help easily run load tests in cloud environments.

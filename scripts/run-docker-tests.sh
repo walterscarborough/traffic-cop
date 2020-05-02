@@ -18,7 +18,7 @@ function run_docker_tests() {
     mkdir -p /tmp/traffic-cop-docker-test/reports
 
     docker build -t traffic-cop-test .
-    docker run --name traffic-cop-test -d -p 8080:8080 -v /tmp/traffic-cop-docker-test/reports:/traffic-cop/reports traffic-cop
+    docker run --name traffic-cop-test -d -p 8080:8080 -v /tmp/traffic-cop-docker-test/reports:/traffic-cop/reports traffic-cop-test
 
     sleep 10
 
