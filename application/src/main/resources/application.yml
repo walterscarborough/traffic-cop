@@ -1,3 +1,2 @@
 reports:
   dir: build/reports
-  location: file:${reports.dir}
