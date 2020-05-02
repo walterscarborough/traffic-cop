@@ -1,5 +1,6 @@
 package com.walterscarborough.trafficcop
 
+import com.walterscarborough.trafficcop.configuration.GatlingConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.scheduling.annotation.EnableAsync
@@ -9,5 +10,7 @@ import org.springframework.scheduling.annotation.EnableAsync
 class TrafficCopApplication
 
 fun main(args: Array<String>) {
+	GatlingConfiguration.configureOutputDirectory()
+
 	runApplication<TrafficCopApplication>(*args)
 }

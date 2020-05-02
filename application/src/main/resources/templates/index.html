@@ -9,7 +9,7 @@
         <td colspan="2"> No Reports Available </td>
     </tr>
     <tr th:each="report : ${reports}">
-        <td><a th:href="@{/{rep}/index.html(rep=${report})}" /><span th:text="${report}"> Report </span></td>
+        <td><a th:href="@{/reports/{rep}/index.html(rep=${report})}" /><span th:text="${report}"> Report </span></td>
     </tr>
     </tbody>
 </table>

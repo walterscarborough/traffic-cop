@@ -16,11 +16,16 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
+import org.springframework.test.context.TestPropertySource
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(
+    webEnvironment = WebEnvironment.RANDOM_PORT,
+    classes = [TrafficCopApplication::class]
+)
+@TestPropertySource(properties = ["reports.dir=/tmp/traffic-cop-integration-test"])
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
 class ReportsTest {
@@ -53,7 +58,7 @@ class ReportsTest {
     }
 
     @Test
-    fun `report is generated after load test is run`() {
+    fun `report list is visible from slash and slash reports after load test is run`() {
         val initialReportsResult = mockMvc.perform(
             MockMvcRequestBuilders.get("/reports")
         ).andExpect(status().isOk)
@@ -77,14 +82,21 @@ class ReportsTest {
 
         Thread.sleep(5000)
 
+        val reportsEndpointLinkAcount = checkEndpoint("/reports")
+        assertThat(reportsEndpointLinkAcount).isGreaterThan(initialReportLinkCount)
+
+        val slashEndpointLinkAcount = checkEndpoint("/")
+        assertThat(slashEndpointLinkAcount).isGreaterThan(initialReportLinkCount)
+    }
+
+    private fun checkEndpoint(endpointName: String): Int {
         val newReportsResult = mockMvc.perform(
-            MockMvcRequestBuilders.get("/reports")
+            MockMvcRequestBuilders.get(endpointName)
         ).andExpect(status().isOk)
             .andReturn()
 
         val newReportLinkCount = newReportsResult.response.contentAsString.split("<a href=").size - 1
-
-        assertThat(newReportLinkCount).isGreaterThan(initialReportLinkCount)
+        return newReportLinkCount
     }
 
 }

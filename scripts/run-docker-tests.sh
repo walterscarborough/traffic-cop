@@ -33,7 +33,7 @@ function run_docker_tests() {
     docker kill traffic-cop-test
     docker rm -f traffic-cop-test
 
-    cd /tmp/traffic-cop-docker-test/reports/general*
+    cd /tmp/traffic-cop-docker-test/reports/loadTestReport*
     if [[ ! -f index.html ]]; then
       echo "Error: gatling report not found"
       exit 1

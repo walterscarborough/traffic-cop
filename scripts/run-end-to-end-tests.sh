@@ -13,7 +13,7 @@ function go_to_project_root_directory() {
     cd "$script_dir/.."
 }
 
-function run_end_to_end_tests() {
+function setup_app() {
     rm -rf /tmp/traffic-cop-end-to-end-test
     mkdir -p /tmp/traffic-cop-end-to-end-test
 
@@ -23,6 +23,11 @@ function run_end_to_end_tests() {
     pushd /tmp/traffic-cop-end-to-end-test || exit 1
     jar xf traffic-cop.jar
     rm traffic-cop.jar
+    popd || exit 1
+}
+
+function run_end_to_end_tests() {
+    pushd /tmp/traffic-cop-end-to-end-test || exit 1
 
     java -Dreports.dir=/tmp/traffic-cop-end-to-end-test/reports -cp . org.springframework.boot.loader.JarLauncher &
     local -r app_pid=$!
@@ -34,9 +39,27 @@ function run_end_to_end_tests() {
 
     sleep 10
 
+    local -r reportUrl=$(curl 'http://localhost:8080/reports' -X GET \
+      | grep href \
+      | sed "s/<td><a href=\"//g" \
+      | sed "s/\".*$//g" \
+      | tr -d ' ' \
+      | head -n 1 \
+      | tr -d '\n'\
+    )
+
+    local -r report=$(curl "http://localhost:8080$reportUrl")
+
     kill $app_pid
 
-    cd /tmp/traffic-cop-end-to-end-test/reports/general*
+    if [[ "${report}" == *"Gatling Stats - Global Information"* ]]; then
+      echo "report accessible!"
+    else
+      echo "Error: gatling report not accessible"
+      exit 1
+    fi
+
+    cd /tmp/traffic-cop-end-to-end-test/reports/loadTestReport*
     if [[ ! -f index.html ]]; then
       echo "Error: gatling report not found"
       exit 1
@@ -54,6 +77,7 @@ function display_success_message() {
 function main() {
     set_bash_error_handling
     go_to_project_root_directory
+    setup_app
     run_end_to_end_tests
     display_success_message
 }

@@ -16,7 +16,9 @@ class LoadTestService(
             "-s", simulationClass,
             "-rf", reportsSettings.getReportsDir()
         )
+
         runTestNoExit(args)
+
         return ResponseEntity.ok("Report Scheduled...  Check /reports in few minutes")
     }
 

@@ -9,8 +9,7 @@ import java.io.File
 class ReportsController(
     private val reportsSettings: ReportsSettings
 ) {
-
-    @GetMapping("/reports")
+    @GetMapping(value = ["/", "/reports"])
     fun reports(model: Model): String {
         val directories = File(reportsSettings.getReportsDir())
             .listFiles { obj: File -> obj.isDirectory }
