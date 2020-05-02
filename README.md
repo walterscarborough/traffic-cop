@@ -1,6 +1,6 @@
 # Traffic Cop 🚓🚦
 
-![](https://github.com/walterscarborough/traffic-cop/workflows/.github/workflows/continuous-integration.yml/badge.svg)
+![](https://github.com/walterscarborough/traffic-cop/workflows/Run%20All%20Tests/badge.svg)
 
 ## Overview
 
