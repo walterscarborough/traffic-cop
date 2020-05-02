@@ -18,11 +18,11 @@ function run_end_to_end_tests() {
     mkdir -p /tmp/traffic-cop-end-to-end-test
 
     ./gradlew clean build -x test
-    cp application/build/libs/application-0.0.1-SNAPSHOT.jar /tmp/traffic-cop-end-to-end-test
+    cp application/build/libs/traffic-cop.jar /tmp/traffic-cop-end-to-end-test
 
     pushd /tmp/traffic-cop-end-to-end-test || exit 1
-    jar xf application-0.0.1-SNAPSHOT.jar
-    rm application-0.0.1-SNAPSHOT.jar
+    jar xf traffic-cop.jar
+    rm traffic-cop.jar
 
     java -Dreports.dir=/tmp/traffic-cop-end-to-end-test/reports -cp . org.springframework.boot.loader.JarLauncher &
     local -r app_pid=$!

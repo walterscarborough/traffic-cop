@@ -37,7 +37,7 @@ Here's what that would look like:
 cd application/build/libs
 
 # unpack the jar
-jar xf application-0.0.1-SNAPSHOT.jar
+jar xf traffic-cop.jar
 
 # start traffic-cop
 java -cp . org.springframework.boot.loader.JarLauncher

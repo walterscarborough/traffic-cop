@@ -9,8 +9,6 @@ plugins {
     id("org.asciidoctor.convert") version VersionsConfig.asciidoctorVersion
 }
 
-group = "com.example"
-version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
@@ -36,6 +34,10 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
+}
+
+tasks.withType<Jar> {
+    archiveFileName.set("traffic-cop.jar")
 }
 
 tasks.withType<AsciidoctorTask> {
