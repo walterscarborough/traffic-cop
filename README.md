@@ -2,6 +2,8 @@
 
 ![](https://github.com/walterscarborough/traffic-cop/workflows/Run%20All%20Tests/badge.svg)
 
+![](https://img.shields.io/docker/cloud/build/walterscarborough/traffic-cop.svg)
+
 ## Overview
 
 This application provides a RESTful interface to the [gatling](https://gatling.io/open-source) load testing library to help easily run load tests in cloud environments.
